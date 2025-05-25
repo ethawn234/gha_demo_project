@@ -21,7 +21,7 @@ jobs:
         run: npm test
   # 2nd job to deploy
   deploy: 
-    runs-on: ubutuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Get Code # pull repo with official GH Action 
         uses: actions/checkout@v4

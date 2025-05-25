@@ -1,5 +1,5 @@
 name: Deploy Project
-on: push # GHA Event aka Workflow trigger
+on: [ push, workflow_dispatch ] # GHA Event aka Workflow trigger
 jobs:
   # 1st job to run tests in MainContent.test.jsx
   test: 

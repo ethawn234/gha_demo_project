@@ -1,23 +1,38 @@
 name: Test project
 on: push # GHA Event aka Workflow trigger
 jobs:
-    test: # 1st job to run tests in MainContent.test.jsx
-        runs-on: ubuntu-latest # runner https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
-        steps:
-            # pull repo
-            - name: Get Code 
-              uses: actions/checkout@v4 # https://github.com/marketplace/actions/checkout
-            
-            # install Node for demo but not needed; runner has Node
-            - name: Install Node
-              uses: actions/setup-node@v4 # https://github.com/actions/setup-node
-              with:
-                node-version: 23
-            
-            # install dependencies
-            - name: Install Dependencies
-              run: npm ci # uses locked versions from package-lock.json
-            
-            # Run test script
-            - name: Run Tests
-              run: npm test
+  # 1st job to run tests in MainContent.test.jsx
+  test: 
+    runs-on: ubuntu-latest # runner https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
+    steps:
+      # 1. Pull Repo
+      - name: Get Code 
+        uses: actions/checkout@v4 # https://github.com/marketplace/actions/checkout
+      # 2. Install Node for demo but not needed; runner has Node
+      - name: Install Node
+        uses: actions/setup-node@v4 # https://github.com/actions/setup-node
+        with: # `with` keyword adds optional configurations
+          node-version: 23
+      # 3. Install dependencies
+      - name: Install Dependencies
+        run: npm ci # uses locked versions from package-lock.json
+      # 4. Run test script
+      - name: Run Tests
+        run: npm test
+  # 2nd job to deploy
+  deploy: 
+    runs-on: ubutuntu-latest
+    steps:
+      - name: Get Code # pull repo with official GH Action 
+        uses: actions/checkout@v4
+      - name: Install Node # not really needed but for learning; install Node with setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23
+      - name: Install Dependencies # install version locked app dependencies
+        run: npm ci
+      - name: Build Project # build the project for deployment
+        run: npm run build
+      - name: Deploy # deploy build from above step; could use host eg netlify; just echo for now
+        run: echo "Deploying..."
+

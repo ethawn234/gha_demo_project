@@ -20,7 +20,12 @@ jobs:
       - name: Run Tests
         run: npm test
   # 2nd job to deploy
-  deploy: 
+  deploy:
+  # deploy:
+    # needs: test
+    # if: ${{ always() }} # this line instructs GHA to run the next job even if parent job fails
+    # runs-on: ubuntu-latest
+
     runs-on: ubuntu-latest
     needs: test # string | [test, job2, job3, etc]
     steps:
